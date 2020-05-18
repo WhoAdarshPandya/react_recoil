@@ -6,3 +6,8 @@ export const counterAtom = atom(
         default:0
     }
 )
+
+export const Todos = atom({
+    key:'todoArr',
+    default:[]
+})
