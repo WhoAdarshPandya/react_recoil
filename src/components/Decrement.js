@@ -5,7 +5,10 @@ import {useRecoilState} from 'recoil'
 export default function Decrement() {
     const [counter,setCounter] = useRecoilState(counterAtom)
     const DecVal = () => {
-        setCounter(prev => prev-1)
+        if(counter > 0)
+        {
+            setCounter(prev => prev-1)
+        }
     }
     return (
         <div>

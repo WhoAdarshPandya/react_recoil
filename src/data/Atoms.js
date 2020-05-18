@@ -2,7 +2,7 @@ import {atom} from 'recoil'
 
 export const counterAtom = atom(
     {
-        key:'conter',
+        key:'counter',
         default:0
     }
 )
