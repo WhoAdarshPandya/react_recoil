@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useRecoilValue, useRecoilState } from "recoil";
+import React from "react";
+import { useRecoilState } from "recoil";
 import Paper from "@material-ui/core/Paper";
 import Grow from "@material-ui/core/Grow";
 import { Todos } from "../data/Atoms";
@@ -13,7 +13,7 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 
 export default function DisplayTodo() {
-  const [todos, setTodos] = useRecoilState(Todos);
+  let [todos, setTodos] = useRecoilState(Todos);
   
   const deleteTodo = (todo_id) => {
     let new_todo = todos.filter((todo) => {
@@ -23,27 +23,19 @@ export default function DisplayTodo() {
   };
 
   const checkTodo = (todo_id,compl) => {
-    let new_obj = {};
-   let new_todo = todos.filter((todo) => {
-     if(todo.id !== todo_id)
-     {
-        return todo;
-     }else{
-      new_obj = todo
-     }
-    });
-    if(!new_obj.completed)
-    {
-      setTodos(prevTodo => [{todo_title:new_obj.todo_title,id:new_obj.id,completed:!new_obj.completed,date:new_obj.date},...new_todo])
-    }
-    else{
-      setTodos(prevTodo => [...new_todo,{todo_title:new_obj.todo_title,id:new_obj.id,completed:!new_obj.completed,date:new_obj.date}])
-    }
+    let new_todo = todos  
+    new_todo.map(todo => {
+      if(todo.id === todo_id)
+      {
+        todo.completed = !todo.completed
+      }
+      return todo
+    })
+    setTodos(prev => new_todo)
   }
-  
   return (
     <div style={{ width: "100%" }}>
-      <List className="" style={{ width: "100%", margin: "0 auto" }}>
+      <List className="" component="div" style={{ width: "100%", margin: "0 auto" }}>
         {todos.map((item) => (
           <Grow in={true}>
             <Paper style={{ marginTop: "15px" }}>

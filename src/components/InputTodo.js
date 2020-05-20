@@ -26,26 +26,8 @@ export default function InputTodo() {
   const [todos, settodos] = useRecoilState(Todos);
   const [todoText, settodoText] = useState("");
   const addButton = () => {
-    let newObj = {
-      todo_title: todoText,
-      completed: false,
-      id: uuid(),
-      date:
-        new Date().getFullYear() +
-        "/" +
-        (new Date().getMonth + 1) +
-        "/" +
-        new Date().getDate(),
-    };
-    let new_todos = [...todos, newObj];
-    settodos((todo) => new_todos);
-    settodoText("");
-  };
-  const changeText = (e) => {
-    settodoText(e.target.value);
-  };
-  const keyP = (e) => {
-    if (e.key === "Enter") {
+    if(todoText !== "")
+    {
       let newObj = {
         todo_title: todoText,
         completed: false,
@@ -53,13 +35,37 @@ export default function InputTodo() {
         date:
           new Date().getFullYear() +
           "/" +
-          (parseInt(new Date().getMonth()) + 1) +
+          (new Date().getMonth + 1) +
           "/" +
           new Date().getDate(),
       };
       let new_todos = [...todos, newObj];
       settodos((todo) => new_todos);
       settodoText("");
+    }
+  };
+  const changeText = (e) => {
+    settodoText(e.target.value);
+  };
+  const keyP = (e) => {
+    if(todoText !== "")
+    {
+      if (e.key === "Enter") {
+        let newObj = {
+          todo_title: todoText,
+          completed: false,
+          id: uuid(),
+          date:
+            new Date().getFullYear() +
+            "/" +
+            (parseInt(new Date().getMonth()) + 1) +
+            "/" +
+            new Date().getDate(),
+        };
+        let new_todos = [...todos, newObj];
+        settodos((todo) => new_todos);
+        settodoText("");
+      }
     }
   };
   return (
